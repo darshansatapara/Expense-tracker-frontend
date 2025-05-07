@@ -196,7 +196,7 @@ export default function ProfileSection() {
                 Select an option
               </Option>
               {profession?.map((item) => (
-                <Option key={item._id} value={item._id}>
+                <Option key={item?._id} value={item?._id}>
                   {item?.name}
                 </Option>
               ))}
