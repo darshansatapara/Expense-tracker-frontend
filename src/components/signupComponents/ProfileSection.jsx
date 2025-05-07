@@ -48,7 +48,7 @@ export default function ProfileSection() {
       const resData = await fetchIncomeCategoriesIsActive();
       // console.log(resData.categories);
 
-      setProfession(resData.categories);
+      setProfession(resData?.categories);
     };
 
     professionData();

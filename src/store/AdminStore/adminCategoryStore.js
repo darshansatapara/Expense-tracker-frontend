@@ -53,8 +53,8 @@ export const adminCategoryStore = create((set, get) => ({
       const res = await axiosInstance.get(
         "/admincategories/allincomeCategoryIsActive"
       );
-      // console.log(res.data);
-      return res.data;
+      console.log(res?.data);
+      return res?.data;
     } catch (error) {
       console.error("Error fetching income categories:", error);
       toast.error("Failed to fetch income categories!");
