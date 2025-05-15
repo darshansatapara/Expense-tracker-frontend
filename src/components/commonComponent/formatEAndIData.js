@@ -68,7 +68,102 @@ dayjs.extend(weekOfYear);
  * @param {Array} data - Array of expense objects containing online and offline transactions.
  * @returns {Object} Filtered and processed data categorized by date ranges.
  */
-export function filterDataByDateRange(data) {
+// export function filterDataByDateRange(data) {
+//   const today = dayjs().startOf("day");
+//   const yesterday = today.subtract(1, "day");
+//   const startOfWeek = today.startOf("week");
+//   const endOfWeek = today.endOf("week");
+//   const startOfMonth = today.startOf("month");
+//   const endOfMonth = today.endOf("month");
+
+//   // Helper function to filter expenses by date range
+//   const filterByDateRange = (date, start, end) => {
+//     // console.log("data", date);
+//     return (
+//       dayjs(date, "DD-MM-YYYY").isSameOrAfter(start) &&
+//       dayjs(date, "DD-MM-YYYY").isSameOrBefore(end)
+//     );
+//   };
+
+//   // // Helper function to calculate totals for a given expense array
+//   // const calculateTotals = (expenses) => {
+//   //   // console.log(expenses);
+//   //   const offlineTotal = expenses
+//   //     .flatMap((item) => item.offline || [])
+//   //     .reduce((sum, exp) => sum + parseFloat(exp.convertedAmount || 0), 0);
+//   //   const onlineTotal = expenses
+//   //     .flatMap((item) => item.online || [])
+//   //     .reduce((sum, exp) => sum + parseFloat(exp?.convertedAmount || 0), 0);
+
+//   //   console.log(offlineTotal);
+//   //   console.log(onlineTotal);
+//   //   return {
+//   //     offlineTotal,
+//   //     onlineTotal,
+//   //     bothTotal: offlineTotal + onlineTotal,
+//   //   };
+//   // };
+
+//   const calculateTotals = (expenses) => {
+//     const offlineTotal = expenses
+//       .flatMap((item) => item.offline || [])
+//       .reduce((sum, exp) => {
+//         const amount = parseFloat(exp.convertedAmount);
+//         return sum + (isNaN(amount) ? 0 : amount);
+//       }, 0);
+
+//     const onlineTotal = expenses
+//       .flatMap((item) => item.online || [])
+//       .reduce((sum, exp) => {
+//         const amount = parseFloat(exp.convertedAmount);
+//         return sum + (isNaN(amount) ? 0 : amount);
+//       }, 0);
+
+//     return {
+//       offlineTotal,
+//       onlineTotal,
+//       bothTotal: offlineTotal + onlineTotal,
+//     };
+//   };
+
+//   // Filter data for each case
+//   const todayData = data?.filter((item) =>
+//     filterByDateRange(item.date, today, today)
+//   );
+//   const yesterdayData = data.filter((item) =>
+//     filterByDateRange(item.date, yesterday, yesterday)
+//   );
+//   const currentWeekData = data.filter((item) =>
+//     filterByDateRange(item.date, startOfWeek, endOfWeek)
+//   );
+
+//   const currentMonthData = data.filter((item) =>
+//     filterByDateRange(item.date, startOfMonth, endOfMonth)
+//   );
+
+//   return {
+//     today: {
+//       data: todayData,
+//       totals: calculateTotals(todayData),
+//     },
+//     yesterday: {
+//       data: yesterdayData,
+//       totals: calculateTotals(yesterdayData),
+//     },
+//     currentWeek: {
+//       data: currentWeekData,
+//       totals: calculateTotals(currentWeekData),
+//     },
+//     currentMonth: {
+//       data: currentMonthData,
+//       totals: calculateTotals(currentMonthData),
+//     },
+//   };
+// }
+
+// components/commonComponent/formatEAndIData.js
+
+export function filterDataByDateRange(data = []) {
   const today = dayjs().startOf("day");
   const yesterday = today.subtract(1, "day");
   const startOfWeek = today.startOf("week");
@@ -76,58 +171,42 @@ export function filterDataByDateRange(data) {
   const startOfMonth = today.startOf("month");
   const endOfMonth = today.endOf("month");
 
-  // Helper function to filter expenses by date range
+  // Helper function to filter by date range
   const filterByDateRange = (date, start, end) => {
-    // console.log("data", date);
+    if (!date) return false;
+    const parsedDate = dayjs(date, "DD-MM-YYYY");
     return (
-      dayjs(date, "DD-MM-YYYY").isSameOrAfter(start) &&
-      dayjs(date, "DD-MM-YYYY").isSameOrBefore(end)
+      parsedDate.isValid() &&
+      parsedDate.isSameOrAfter(start) &&
+      parsedDate.isSameOrBefore(end)
     );
   };
 
-  // // Helper function to calculate totals for a given expense array
-  // const calculateTotals = (expenses) => {
-  //   // console.log(expenses);
-  //   const offlineTotal = expenses
-  //     .flatMap((item) => item.offline || [])
-  //     .reduce((sum, exp) => sum + parseFloat(exp.convertedAmount || 0), 0);
-  //   const onlineTotal = expenses
-  //     .flatMap((item) => item.online || [])
-  //     .reduce((sum, exp) => sum + parseFloat(exp?.convertedAmount || 0), 0);
-
-  //   console.log(offlineTotal);
-  //   console.log(onlineTotal);
-  //   return {
-  //     offlineTotal,
-  //     onlineTotal,
-  //     bothTotal: offlineTotal + onlineTotal,
-  //   };
-  // };
-
-  const calculateTotals = (expenses) => {
-    const offlineTotal = expenses
+  // Helper function to calculate totals
+  const calculateTotals = (items = []) => {
+    const offlineTotal = items
       .flatMap((item) => item.offline || [])
       .reduce((sum, exp) => {
-        const amount = parseFloat(exp.convertedAmount);
+        const amount = parseFloat(exp?.convertedAmount);
         return sum + (isNaN(amount) ? 0 : amount);
       }, 0);
 
-    const onlineTotal = expenses
+    const onlineTotal = items
       .flatMap((item) => item.online || [])
       .reduce((sum, exp) => {
-        const amount = parseFloat(exp.convertedAmount);
+        const amount = parseFloat(exp?.convertedAmount);
         return sum + (isNaN(amount) ? 0 : amount);
       }, 0);
 
     return {
-      offlineTotal,
-      onlineTotal,
-      bothTotal: offlineTotal + onlineTotal,
+      offlineTotal: parseFloat(offlineTotal.toFixed(2)),
+      onlineTotal: parseFloat(onlineTotal.toFixed(2)),
+      bothTotal: parseFloat((offlineTotal + onlineTotal).toFixed(2)),
     };
   };
 
-  // Filter data for each case
-  const todayData = data?.filter((item) =>
+  // Filter data
+  const todayData = data.filter((item) =>
     filterByDateRange(item.date, today, today)
   );
   const yesterdayData = data.filter((item) =>
@@ -136,8 +215,6 @@ export function filterDataByDateRange(data) {
   const currentWeekData = data.filter((item) =>
     filterByDateRange(item.date, startOfWeek, endOfWeek)
   );
-
-
   const currentMonthData = data.filter((item) =>
     filterByDateRange(item.date, startOfMonth, endOfMonth)
   );

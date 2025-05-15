@@ -37,11 +37,11 @@ const Navbar = ({ toggleSidebar }) => {
       icon: <FileTextOutlined className="text-lg text-gray-700" />,
     },
   };
-  
+
   const handleSignOut = async () => {
     try {
       const result = await signout();
-    
+
       navigate("/signin");
     } catch (error) {
       console.error("Signout error in handleSignOut:", {
@@ -110,15 +110,6 @@ const Navbar = ({ toggleSidebar }) => {
 
         {/* Right Section */}
         <div className="flex items-center space-x-4">
-          <button
-            className="relative hover:cursor-pointer"
-            onClick={() => setShowNotification(true)} // Show modal on click
-          >
-            <BellPlus />
-            {notifications.length > 0 && (
-              <span className="absolute top-0 right-0 w-3 h-3 bg-red-600 rounded-full"></span>
-            )}
-          </button>
           {/* Logout Button Hidden on Small Screens */}
           <div
             className="hidden lg:flex hover:cursor-pointer rounded-md h-8 w-8 items-center justify-center"

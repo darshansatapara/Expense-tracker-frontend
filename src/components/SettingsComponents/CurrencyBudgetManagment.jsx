@@ -220,7 +220,9 @@ function CurrencyManagement() {
 
   if (loading) {
     return (
-      <div class="w-16 h-16 border-8 border-dashed rounded-full animate-spin border-blue-600"></div>
+      <div className="flex justify-center items-center h-[60vh]">
+        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-indigo-500"></div>
+      </div>
     );
   }
 
