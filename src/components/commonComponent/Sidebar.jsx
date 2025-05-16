@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useCallback } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import useUserProfileStore from "../../store/UserStore/userProfileStore.js";
 import {
@@ -50,41 +50,23 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
 };
 
 const SidebarContent = ({ toggleSidebar, isSmallScreen }) => {
-  const { fetchUserProfile } = useUserProfileStore();
+  const { fetchUserProfile, userProfile } = useUserProfileStore();
   const { currentUser, signout } = userStore();
-  const [userProfile, setUserProfile] = useState(null);
-
-  const userId = currentUser?._id;
   const navigate = useNavigate();
-
+  const user = currentUser;
+  // console.log("userId", user);
   const handleSignOut = async () => {
     try {
-      await signout(); // Call the signout function from the store
-   
-      if (isSmallScreen) toggleSidebar(); // Close sidebar on small screens
-      navigate("/signin"); // Redirect to signin page
+      await signout();
+      if (isSmallScreen) toggleSidebar();
+      navigate("/signin");
     } catch (error) {
-      console.error("Signout error in handleSignOut:", {
-        message: error.message,
-        response: error.response?.data,
-        status: error.response?.status,
-      });
+      console.error("Signout error:", error);
     }
   };
 
-  useEffect(() => {
-    const getUserProfile = async () => {
-      if (!userId) return; // Skip if no userId
-      try {
-        const response = await fetchUserProfile(userId);
-        setUserProfile(response.data);
-      } catch (err) {
-        console.error("Failed to fetch user profile:", err);
-      }
-    };
-
-    getUserProfile();
-  }, [userId, fetchUserProfile]);
+  // Loading state for better UX
+  const isLoading = !userProfile && user;
 
   return (
     <div className="grid h-screen">
@@ -92,13 +74,13 @@ const SidebarContent = ({ toggleSidebar, isSmallScreen }) => {
       <div className="flex flex-col items-center py-6 bg-white">
         <div className="flex rounded-full items-center justify-center border-2 border-indigo-400">
           <img
-            src={userProfile?.profilePic || "/images/default-profile.jpg"} // Fallback image
+            src={currentUser?.profilePic || "/images/default-profile.jpg"}
             alt="User"
             className="rounded-full h-20 w-20"
           />
         </div>
         <span className="mt-4 text-lg font-semibold text-gray-700">
-          {userProfile?.username || "Username"}
+          {isLoading ? "Loading..." : currentUser?.username || "Username"}
         </span>
       </div>
 
@@ -141,17 +123,16 @@ const SidebarContent = ({ toggleSidebar, isSmallScreen }) => {
                   : "hover:bg-gray-200"
               }`
             }
-            onClick={() => {
-              if (isSmallScreen) toggleSidebar();
-            }}
+            onClick={() => isSmallScreen && toggleSidebar()}
           >
-            {icon} <span>{name}</span>
+            {icon}
+            <span>{name}</span>
           </NavLink>
         ))}
         {/* Logout Button */}
         <button
           onClick={handleSignOut}
-          className="w-[85%] flex items-center space-x-2 py-2 px-2  lg:hidden rounded-xl text-gray-600 text-md font-bold hover:bg-gray-200"
+          className="w-[85%] flex items-center space-x-2 py-2 px-2 lg:hidden rounded-xl text-gray-600 text-md font-bold hover:bg-gray-200"
         >
           <LogOut className="text-lg text-gray-700" />
           <span>Logout</span>
