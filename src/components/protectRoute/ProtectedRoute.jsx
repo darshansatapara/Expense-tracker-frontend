@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import { userStore } from "../../store/UserStore/userAuthStore.js"; // Adjust path as needed
+import { Spin } from "antd"; // Adjust path as needed
 
 const ProtectedRoute = () => {
   const { currentUser, checkAuth, isLoading } = userStore();
@@ -22,10 +23,10 @@ const ProtectedRoute = () => {
 
   if (isChecking || isLoading) {
     return (
-      <div className="flex justify-center items-center h-[60vh]">
-        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-indigo-500"></div>
+      <div className="h-screen flex justify-center items-center">
+        <Spin size="large" />
       </div>
-    ); // Replace with a proper loading spinner if needed
+    );
   }
 
   return currentUser ? <Outlet /> : <Navigate to="/signin" replace />;

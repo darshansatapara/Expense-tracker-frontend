@@ -9,6 +9,7 @@ import IncomeAndExpenseHome from "../components/homeComponent/IncomeAndExpenseHo
 import AddIncomeExpenseModel from "../components/commonComponent/AddIncomeExpenseModel";
 import { userStore } from "../store/UserStore/userAuthStore";
 import { filterDataByDateRange } from "../components/commonComponent/formatEAndIData";
+import { Spin } from "antd";
 
 function HomePage() {
   const { userExpenses, fetchUserExpenses } = useUserExpenseStore();
@@ -93,8 +94,8 @@ function HomePage() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500"></div>
+      <div className="h-screen flex justify-center items-center">
+        <Spin size="large" />
       </div>
     );
   }

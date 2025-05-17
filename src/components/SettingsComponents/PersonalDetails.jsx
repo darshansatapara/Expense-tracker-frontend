@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import useUserProfileStore from "../../store/UserStore/userProfileStore.js";
-import { message } from "antd";
+import { message, Spin } from "antd";
 import {
   UserOutlined,
   MailOutlined,
@@ -105,8 +105,8 @@ export default function PersonalDetails() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500"></div>
+      <div className="h-screen flex justify-center items-center">
+        <Spin size="large" />
       </div>
     );
   }

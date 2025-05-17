@@ -15,6 +15,7 @@ import html2canvas from "html2canvas";
 import ExcelJS from "exceljs";
 import useFinancialReportStore from "../store/UserStore/useFinancialReportStore.js";
 import { userStore } from "../store/UserStore/userAuthStore";
+import { Spin } from "antd";
 
 // Register ChartJS components
 ChartJS.register(
@@ -403,8 +404,8 @@ const ReportPage = () => {
 
   if (loading)
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500"></div>
+      <div className="h-screen flex justify-center items-center">
+        <Spin size="large" />
       </div>
     );
 

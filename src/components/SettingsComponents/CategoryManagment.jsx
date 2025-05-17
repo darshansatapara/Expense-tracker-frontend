@@ -502,7 +502,7 @@ import { adminCategoryStore } from "../../store/AdminStore/adminCategoryStore.js
 import { userCategoryStore } from "../../store/UserStore/userCategoryStore.js";
 import { userStore } from "../../store/UserStore/userAuthStore";
 import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
-import { message } from "antd"; // For user notifications
+import { message, Spin } from "antd"; // For user notifications
 
 const CategoryManagement = () => {
   const { currentUser } = userStore();
@@ -730,8 +730,8 @@ const CategoryManagement = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500"></div>
+      <div className="h-screen flex justify-center items-center">
+        <Spin size="large" />
       </div>
     );
   }

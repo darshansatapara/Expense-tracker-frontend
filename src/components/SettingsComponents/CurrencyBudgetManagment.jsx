@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { userCategoryStore } from "../../store/UserStore/userCategoryStore.js";
 import { adminCategoryStore } from "../../store/AdminStore/adminCategoryStore.js";
-import { Button, Modal, Select, Table, InputNumber, message } from "antd";
+import { Button, Modal, Select, Table, InputNumber, message, Spin } from "antd";
 import { userStore } from "../../store/UserStore/userAuthStore";
 function CurrencyManagement() {
   const { currentUser } = userStore();
@@ -227,8 +227,8 @@ function CurrencyManagement() {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-[60vh]">
-        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-indigo-500"></div>
+      <div className="h-screen flex justify-center items-center">
+        <Spin size="large" />
       </div>
     );
   }
