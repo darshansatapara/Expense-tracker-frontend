@@ -123,6 +123,31 @@ function CurrencyManagement() {
     }
   };
 
+  // const handleBudgetUpdate = async () => {
+  //   if (
+  //     !onlineBudget ||
+  //     !offlineBudget ||
+  //     onlineBudget < 500 ||
+  //     offlineBudget < 500
+  //   ) {
+  //     message.error("Budgets must be at least 500 and cannot be empty.");
+  //     return;
+  //   }
+  //   try {
+  //     const budgetPayload = { onlineBudget, offlineBudget };
+  //     console.log("Budget Payload:", budgetPayload);
+  //     await updateCurrencyAndBudget(userId, budgetPayload);
+  //     setCurrency({
+  //       ...currency,
+  //       budget: [{ onlineBudget, offlineBudget }],
+  //     });
+  //     message.success("Budgets updated successfully!");
+  //   } catch (error) {
+  //     message.error("Failed to update budgets. Please try again.");
+  //     console.error("Error updating budgets:", error);
+  //   }
+  // };
+
   const handleBudgetUpdate = async () => {
     if (
       !onlineBudget ||
@@ -134,7 +159,15 @@ function CurrencyManagement() {
       return;
     }
     try {
-      const budgetPayload = { onlineBudget, offlineBudget };
+      const budgetPayload = {
+        budget: [
+          {
+            onlineBudget: onlineBudget.toString(), // Convert to string as backend expects strings
+            offlineBudget: offlineBudget.toString(), // Convert to string as backend expects strings
+          },
+        ],
+      };
+      console.log("Budget Payload:", budgetPayload);
       await updateCurrencyAndBudget(userId, budgetPayload);
       setCurrency({
         ...currency,
@@ -146,7 +179,6 @@ function CurrencyManagement() {
       console.error("Error updating budgets:", error);
     }
   };
-
   const columns = [
     {
       title: "Currency",
