@@ -26,7 +26,7 @@ const SettingsPage = () => {
   const isMainSettingsPage = location.pathname === "/settings";
 
   return (
-    <div className="min-h-screen mr-5">
+    <div className="min-h-screen">
       {/* {!isMobile && isMainSettingsPage && <Settings_Upper />} */}
 
       <div
@@ -45,9 +45,15 @@ const SettingsPage = () => {
             <Route path="contact-us" element={<ContactUs />} />
             <Route path="personal-details" element={<PersonalDetails />} />
             {/* <Route path="theme-settings" element={<ThemeSettings />} /> */}
-            <Route path="category-management" element={<CategoryManagement />} />
+            <Route
+              path="category-management"
+              element={<CategoryManagement />}
+            />
             {/* <Route path="subcategory-management" element={<SubcategoryManagement />} /> */}
-            <Route path="currency-budget-management" element={<CurrencyManagement />} />
+            <Route
+              path="currency-budget-management"
+              element={<CurrencyManagement />}
+            />
             {/* <Route path="budget-management" element={<BudgetManagement />} /> */}
             <Route path="help-support" element={<HelpSupport />} />
             <Route path="privacy-policy" element={<PrivacyPolicy />} />

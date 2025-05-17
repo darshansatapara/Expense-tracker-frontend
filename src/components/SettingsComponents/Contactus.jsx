@@ -402,7 +402,7 @@ const ContactUs = () => {
 
   return (
     <div
-      className="min-h-screen w-full py-12 px-4 sm:px-8 md:px-12 lg:px-16 font-nunito"
+      className="min-h-screen w-full py-12 px-2 sm:px-8 md:px-12 lg:px-16 font-nunito"
       style={{
         background: "linear-gradient(135deg, #f0f4ff, #e0e8ff, #d0d8ff)",
       }}
@@ -422,7 +422,7 @@ const ContactUs = () => {
         </p>
       </motion.div>
 
-      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-8 lg:gap-12 items-stretch">
+      <div className="max-w-7xl flex flex-col lg:flex-row gap-8 lg:gap-12 items-stretch">
         <motion.div
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
