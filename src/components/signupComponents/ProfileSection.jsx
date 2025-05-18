@@ -61,7 +61,6 @@ export default function ProfileSection() {
       ...values,
       password: userData.password,
       profilePic,
-      profession: profession,
     };
     // console.log("payload", payload);
     try {
