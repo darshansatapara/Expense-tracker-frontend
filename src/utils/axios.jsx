@@ -2,7 +2,9 @@
 import axios from "axios";
 
 export const axiosInstance = axios.create({
-  baseURL: import.meta.env.LIVE_URL,
+  baseURL:
+    import.meta.env.LIVE_URL ||
+    "https://expense-tracker-2-darshans-projects-bc298955.vercel.app/api",
   // "http://localhost:5000/api",
   withCredentials: true,
   headers: {
