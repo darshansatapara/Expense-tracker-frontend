@@ -14,13 +14,12 @@ export default function ProfileSection() {
   const { signup } = userStore();
 
   const userData = location.state?.userCredentials || {};
-  // console.log(userData);
+
   const [form] = Form.useForm();
   const [profession, setProfession] = useState();
   const [profilePic, setProfilePic] = useState("");
   const [loading, setLoading] = useState(false);
   const handleFileUpload = (file) => {
-    // console.log(file);
     const rawFile = file.originFileObj || file; // Access the raw file
 
     if (!rawFile) return;
@@ -62,7 +61,7 @@ export default function ProfileSection() {
       ...values,
       password: userData.password,
       profilePic,
-      // profession: profession,
+      profession: profession,
     };
     // console.log("payload", payload);
     try {
@@ -94,13 +93,14 @@ export default function ProfileSection() {
           form={form}
           layout="vertical"
           initialValues={{
-            profilePic: userData.profilePic || "",
+            profilePic: userData?.profilePic || "",
             username:
-              userData.name || `User${Math.floor(1000 + Math.random() * 9000)}`,
-            email: userData.email || "",
-            mobile_no: userData.mobile_no || "",
-            date_of_birth: userData.date_of_birth || null,
-            profession: userData.profession || "",
+              userData?.name ||
+              `User${Math.floor(1000 + Math.random() * 9000)}`,
+            email: userData?.email || "",
+            mobile_no: userData?.mobile_no || "",
+            date_of_birth: userData?.date_of_birth || null,
+            profession: userData?.profession || "",
           }}
           onFinish={handleFinish}
         >
